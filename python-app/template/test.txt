@@ -1,0 +1,4 @@
+Hi this is a file
+
+The name of the app is ${{values.app_name}}
+The env of the app is ${{values.app_env}}
