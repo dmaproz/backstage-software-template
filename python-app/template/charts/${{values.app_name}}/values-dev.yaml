@@ -3,7 +3,7 @@ ingress:
   className: "nginx"
   annotations: {}
   hosts:
-    - host: ${{values.app_name}}-${{values.app_env}}.parcer.com
+    - host: ${{values.app_name}}-dev.parcer.com
       paths:
         - path: /
           pathType: Prefix
