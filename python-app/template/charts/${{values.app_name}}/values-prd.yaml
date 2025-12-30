@@ -1,0 +1,15 @@
+replicaCount: 2
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations: {}
+  hosts:
+    - host: ${{values.app_name}}.parcer.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+resources:
+  requests:
+    cpu: 60m
+    memory: 60M

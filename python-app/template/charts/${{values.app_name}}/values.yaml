@@ -1,0 +1,40 @@
+replicaCount: 1
+image:
+  repository: dcaroc/${{values.app_name}}
+  pullPolicy: IfNotPresent
+  tag: ${{values.app_name}}-dcaroc/${{values.app-env}}-latest
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+serviceAccount:
+  create: false
+  automount: true
+  annotations: {}
+  name: ""
+podAnnotations: {}
+podLabels: {}
+podSecurityContext: {}
+securityContext: {}
+service:
+  type: ClusterIP
+  port: 5000
+httpRoute:
+  enabled: false
+livenessProbe:
+  httpGet:
+    path: /app/v1/healthz
+    port: http
+readinessProbe:
+  httpGet:
+    path: /app/v1/healthz
+    port: http
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+volumes: []
+volumeMounts: []
+nodeSelector: {}
+tolerations: []
+affinity: {}

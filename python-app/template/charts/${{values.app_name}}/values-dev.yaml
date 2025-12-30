@@ -1,0 +1,14 @@
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations: {}
+  hosts:
+    - host: ${{values.app_name}}-${{values.app_env}}.parcer.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+resources:
+  requests:
+    cpu: 40m
+    memory: 40M
