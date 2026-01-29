@@ -55,21 +55,23 @@ jobs:
           curl -ksSL -o argocd https://argocd-server.argocd/download/argocd-linux-amd64
           chmod +x argocd
           sudo mv ./argocd /usr/local/bin/argocd
-      - name: ArgoCD pre-deployment
+      - name: ArgoCD pre-deployment ensure argoCD repo and app
         shell: bash
         run: |
-          repo_url = "https://github.com/orgs/dmaproz-org/${{values.app_name}}"
-          argocd repo list | grep -q  $repo_url || argocd repo add $repo_url
-          
-          argocd get app ${{values.app_name}} || argocd app create ${{values.app_name}} \
-          --repo $repo_url \
-          --path charts/${{values.app_name}} \
-          --dest-namespace ${{values.app_env}} \
-          --dest-server https://kubernetes.default.svc \
-          --values values-${{values.app_env}}.yaml \
-          --revision master
-          --sync-policy manual
-          --sync-option CreateNamespace=true
+          # Connects the argocd repo
+          repo="https://github.com/ricardoandre-97/${{values.app_name}}.git"
+          argocd repo list | grep -q $repo || argocd repo add $repo
+
+          # Creates the argocd app
+          argocd app get ${{values.app_name}} || argocd app create ${{values.app_name}} \
+            --repo $repo \
+            --path charts/${{values.app_name}} \
+            --dest-namespace ${{values.app_env}} \
+            --dest-server https://kubernetes.default.svc \
+            --values values-${{values.app_env}}.yaml \
+            --revision main \
+            --sync-policy manual \
+            --sync-option CreateNamespace=true
 
       - name: ArgoCD deployment
         shell: bash
