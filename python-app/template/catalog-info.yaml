@@ -6,6 +6,7 @@ metadata:
   # Example for optional annotations
   annotations:
     github.com/project-slug: dmaproz/${{values.app_name}}
+    backstage.io/techdocs-ref: dir:.
 spec:
   type: service
   owner: development
